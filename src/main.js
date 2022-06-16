@@ -57,7 +57,7 @@ const getDate = (date) => {
   return dayjs(date).format('DD/MM/YY hh:mm')
 }
 
-const offers = {
+export const offers = {
   'type': getTravelPointTypes,
   'offers': [
     {
@@ -81,10 +81,10 @@ const destination = {
   ]
 }
 
-const travelPoint = {
+export const travelPoint = {
   'base_price': getRandomInteger(100, 2000),
-  'date_from': getDate(),
-  'date_to': getDate('2022-07-11T11:22:13.375Z'),
+  // 'date_from': getDate(),
+  // 'date_to': getDate('2022-07-11T11:22:13.375Z'),
   'id': getRandomInteger(1, 1000),
   'is_favorite': Boolean(getRandomInteger(0, 1)),
   'type': getTravelPointTypes,

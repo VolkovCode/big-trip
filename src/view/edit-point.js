@@ -1,3 +1,26 @@
+import { offers } from "../main.js"
+import { travelPoint } from "../main.js"
+
+const eventOffer = (offer) => {
+  return `<div class="event__offer-selector">
+  <input class="event__offer-checkbox  visually-hidden" id="event-offer-train-1" type="checkbox" name="event-offer-train">
+  <label class="event__offer-label" for="event-offer-train-1">
+    <span class="event__offer-title">${offer.title}</span>
+    &plus;&euro;&nbsp;
+    <span class="event__offer-price">${offer.price}</span>
+  </label>
+</div>`
+}
+
+const repeating = (cb, offers) => {
+  for (let i of offers) {
+    cb(i)
+  }
+}
+
+const offerCards = repeating(eventOffer, travelPoint.offers.offers);
+console.log(offerCardsf)
+
 export const createEditPointTemplate = (point) => {
   return `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -149,14 +172,17 @@ export const createEditPointTemplate = (point) => {
                 <span class="event__offer-price">40</span>
               </label>
             </div>
-          </div>
-        </section>
+            
+           
+            ${offerCards}
+          </div >
+        </section >
 
-        <section class="event__section  event__section--destination">
-          <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">${point.destination.description}</p>
-        </section>
-      </section>
-    </form>
-  </li>`;
+  <section class="event__section  event__section--destination">
+    <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+    <p class="event__destination-description">${point.destination.description}</p>
+  </section>
+      </section >
+    </form >
+  </li > `;
 };
