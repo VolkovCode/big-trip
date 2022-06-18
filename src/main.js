@@ -10,7 +10,7 @@ import { createEditPointTemplate } from './view/edit-point.js';
 import { createPointTemplate } from './view/point.js';
 
 
-const POINT_COUNT = 10;
+const POINT_COUNT = 15;
 const siteBodyElement = document.querySelector('.page-body');
 
 const render = (container, template, position = 'beforeend') => {
@@ -21,8 +21,8 @@ const getRandomInteger = (min, max) => {
   let randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
   return randomNumber;
 }
-const getTravelPointTypes = () => {
-  const travelPointTypes = ['Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight', 'Check-in', 'Sightseeng', 'Restaurant']
+const getTravelPointType = () => {
+  const travelPointTypes = ['Taxi', 'Bus', 'Train', 'Ship', 'Transport', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant']
   const index = getRandomInteger(0, travelPointTypes.length - 1);
   return travelPointTypes[index]
 }
@@ -57,42 +57,55 @@ const getDate = (date) => {
   return dayjs(date).format('DD/MM/YY hh:mm')
 }
 
-export const offers = {
-  'type': getTravelPointTypes,
-  'offers': [
-    {
-      'title': 'Upgrade to a business class',
-      'price': 120
-    }, {
-      'title': 'Choose the radio station',
-      'price': 60
-    }
-  ]
+const getOffer = () => {
+  const offers = {
+    'type': getTravelPointType(),
+    'offers': [
+      {
+        'title': 'Upgrade to a business class',
+        'price': 120
+      }, {
+        'title': 'Choose the radio station',
+        'price': 60
+      }
+    ]
+  }
+  return offers
 }
 
+const getDestination = () => {
 const destination = {
   'description': getDescription(),
-  'name': getCity,
+  'name': getCity(),
   'pictures': [
     {
-      'src': getPhoto,
+      'src': getPhoto(),
       'description': 'Тупа фотка'
     }
   ]
 }
-
-export const travelPoint = {
-  'base_price': getRandomInteger(100, 2000),
-  // 'date_from': getDate(),
-  // 'date_to': getDate('2022-07-11T11:22:13.375Z'),
-  'id': getRandomInteger(1, 1000),
-  'is_favorite': Boolean(getRandomInteger(0, 1)),
-  'type': getTravelPointTypes,
-  'offers': offers,
-  'destination': destination,
+return destination
 }
 
 
+
+const getTravelPoint = () => {
+  const travelPoint = {
+    'base_price': getRandomInteger(100, 2000),
+    // 'date_from': getDate(),
+    // 'date_to': getDate('2022-07-11T11:22:13.375Z'),
+    'id': getRandomInteger(1, 1000),
+    'is_favorite': Boolean(getRandomInteger(0, 1)),
+    'type': getTravelPointType(),
+    'offers': getOffer(),
+    'destination': getDestination(),
+  }
+  return travelPoint
+}
+
+const travelPoints = new Array(POINT_COUNT).fill(null).map(getTravelPoint)
+
+console.log(travelPoints.slice(0, travelPoints.length-1))
 
 
 
@@ -119,9 +132,9 @@ const tripBordElement = siteBodyElement.querySelector('.trip-events');
 render(tripBordElement, createTripBordTemplate());
 
 const eventListElement = tripBordElement.querySelector('.trip-events__list');
-render(eventListElement, createEditPointTemplate(travelPoint));
+render(eventListElement, createEditPointTemplate(travelPoints[travelPoints.length - 1]));
 render(eventListElement, createNewPointTemplate());
 
-for (let i = 0; i < POINT_COUNT; i++) {
-  render(eventListElement, createPointTemplate());
+for (let i of travelPoints.slice(0, travelPoints.length-1)) {
+  render(eventListElement, createPointTemplate(i));
 }
