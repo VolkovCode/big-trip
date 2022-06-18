@@ -53,6 +53,16 @@ const getPhoto = () => {
   return `http://picsum.photos/248/152?r=${r}`
 }
 
+const getPicture = () => {
+  const picture = {
+    'src': getPhoto(),
+    'description': 'Тупа фотка'
+  }
+  return picture
+}
+
+const pictures = new Array(getRandomInteger(1, 5)).fill(null).map(getPicture)
+
 const getDate = (date) => {
   return dayjs(date).format('DD/MM/YY hh:mm')
 }
@@ -77,12 +87,7 @@ const getDestination = () => {
 const destination = {
   'description': getDescription(),
   'name': getCity(),
-  'pictures': [
-    {
-      'src': getPhoto(),
-      'description': 'Тупа фотка'
-    }
-  ]
+  'pictures': pictures,
 }
 return destination
 }
@@ -91,7 +96,7 @@ return destination
 
 const getTravelPoint = () => {
   const travelPoint = {
-    'base_price': getRandomInteger(100, 2000),
+    'base_price': getRandomInteger(100, 200),
     // 'date_from': getDate(),
     // 'date_to': getDate('2022-07-11T11:22:13.375Z'),
     'id': getRandomInteger(1, 1000),
@@ -133,8 +138,8 @@ render(tripBordElement, createTripBordTemplate());
 
 const eventListElement = tripBordElement.querySelector('.trip-events__list');
 render(eventListElement, createEditPointTemplate(travelPoints[travelPoints.length - 1]));
-render(eventListElement, createNewPointTemplate());
+render(eventListElement, createNewPointTemplate(travelPoints[travelPoints.length - 2]));
 
-for (let i of travelPoints.slice(0, travelPoints.length-1)) {
+for (let i of travelPoints.slice(0, travelPoints.length-2)) {
   render(eventListElement, createPointTemplate(i));
 }

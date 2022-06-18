@@ -31,7 +31,7 @@ export const createPointTemplate = (point) => {
       <h3 class="event__title">${type} ${city}</h3>
         ${eventTime()}
       <p class="event__price">
-        &euro;&nbsp;<span class="event__price-value">20</span>
+        &euro;&nbsp;<span class="event__price-value">${point.base_price}</span>
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
