@@ -3,13 +3,14 @@ import TripCostView from './view/trip-cost.js';
 import TripSortView from './view/trip-sort.js';
 import FilterView from './view/filter.js';
 import MainMenuView from './view/main-menu.js';
-
-import { createMainMenuTemplate } from './view/main-menu.js';
+import PointListView from './view/point-list.js';
+import PointView from './view/point.js';
+// import { createMainMenuTemplate } from './view/main-menu.js';
 // import { createTripInfoTemplate } from './view/trip-info.js';
 // import { tripCostTemplate } from './view/trip-cost.js';
-import { createTripBordTemplate } from './view/trip-sort.js';
-import { createNewPointTemplate } from './view/new-point.js';
-import { createEditPointTemplate } from './view/edit-point.js';
+// import { createTripBordTemplate } from './view/trip-sort.js';
+// import { createNewPointTemplate } from './view/new-point.js';
+// import { createEditPointTemplate } from './view/edit-point.js';
 import { createPointTemplate } from './view/point.js';
 import { getTravelPoint } from './data.js';
 
@@ -51,13 +52,20 @@ render(tripInfoElement, new TripCostView().getElement());
 const filterElement = siteBodyElement.querySelector('.trip-controls__filters');
 render(filterElement, new FilterView().getElement());
 
-const tripBordElement = siteBodyElement.querySelector('.trip-events');
-render(tripBordElement, new TripSortView().getElement());
+const tripBoardElement = siteBodyElement.querySelector('.trip-events');
+render(tripBoardElement, new TripSortView().getElement());
+// const pointListComponent = new PointListView();
+render(tripBoardElement, new PointListView().getElement());
 
-const eventListElement = tripBordElement.querySelector('.trip-events__list');
-render(eventListElement, createEditPointTemplate(travelPoints[travelPoints.length - 1]));
-render(eventListElement, createNewPointTemplate(travelPoints[travelPoints.length - 2]));
+
+
+const eventListElement = tripBoardElement.querySelector('.trip-events__list');
+// render(eventListElement, createEditPointTemplate(travelPoints[travelPoints.length - 1]));
+// render(eventListElement, createNewPointTemplate(travelPoints[travelPoints.length - 2]));
 
 for (let i of travelPoints.slice(0, travelPoints.length-2)) {
-  render(eventListElement, createPointTemplate(i));
+  const point = new PointView(i)
+  render(eventListElement, point.getElement());
 }
+
+// const renderPoint

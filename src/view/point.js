@@ -1,3 +1,5 @@
+import { createElement } from "../utils.js";
+
 const eventOffer = (offers) => {
   return offers.map(offer => `
   <li class="event__offer">
@@ -18,8 +20,7 @@ const eventTime = () => {
       </div>`
 }
 
-export const createPointTemplate = (point) => {
-  console.log(point.type)
+const createPointTemplate = (point) => {
   const type = point.type
   const city = point.destination.name
   return `<li class="trip-events__item">
@@ -49,3 +50,25 @@ export const createPointTemplate = (point) => {
     </div>
   </li>`;
 };
+
+export default class Point {
+  constructor(point) {
+    this._element = null;
+    this.point = point;
+  }
+
+  getTemplate() {
+    return createPointTemplate(this.point)
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate()) 
+    }
+    return this._element
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

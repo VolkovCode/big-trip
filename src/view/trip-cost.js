@@ -8,20 +8,22 @@ const tripCostTemplate = () => {
 
 
 export default class TripCost {
-  constructor () { 
+  constructor() {
     this._element = null;
   }
 
-  getTemplate () {
+  getTemplate() {
     return tripCostTemplate();
   }
 
-  getElement () {
-    if (!this._element)
-      this._element =  createElement(this.getTemplate());
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
   }
-
-  removeElement () {
+  
+  removeElement() {
     this._element = null;
   }
 }
