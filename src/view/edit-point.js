@@ -1,3 +1,5 @@
+import { createElement } from "../utils.js";
+
 const eventOffer = (offers) => {
   return offers.map(offer => 
   `<div class="event__offer-selector">
@@ -17,7 +19,7 @@ const eventType = (types) => {
 </div>`).join('')
 }
 
-export const createEditPointTemplate = (point) => {
+const createEditPointTemplate = (point) => {
   const travelPointTypes = ['taxi', 'bus', 'train', 'ship', 'transport', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant']
   return `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -92,3 +94,29 @@ export const createEditPointTemplate = (point) => {
     </form >
   </li > `;
 };
+
+export default class EditPoint {
+  constructor(point) {
+    this._element = null
+    this._point = point
+  }
+
+  getTemplate() {
+    return createEditPointTemplate(this._point)
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate())
+    }
+    return this._element
+  }  
+  
+  removeElement() {
+    this._element = null
+  }
+  
+}
+  
+
+

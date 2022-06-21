@@ -5,6 +5,7 @@ import FilterView from './view/filter.js';
 import MainMenuView from './view/main-menu.js';
 import PointListView from './view/point-list.js';
 import PointView from './view/point.js';
+import EditPointView from './view/edit-point.js';
 // import { createMainMenuTemplate } from './view/main-menu.js';
 // import { createTripInfoTemplate } from './view/trip-info.js';
 // import { tripCostTemplate } from './view/trip-cost.js';
@@ -60,7 +61,8 @@ render(tripBoardElement, new PointListView().getElement());
 
 
 const eventListElement = tripBoardElement.querySelector('.trip-events__list');
-// render(eventListElement, createEditPointTemplate(travelPoints[travelPoints.length - 1]));
+
+// render(eventListElement, new EditPointView(travelPoints[travelPoints.length - 1]).getElement());
 // render(eventListElement, createNewPointTemplate(travelPoints[travelPoints.length - 2]));
 
 for (let i of travelPoints.slice(0, travelPoints.length-2)) {
