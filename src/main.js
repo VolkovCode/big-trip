@@ -60,14 +60,35 @@ render(tripBoardElement, new PointListView().getElement());
 
 
 
-const eventListElement = tripBoardElement.querySelector('.trip-events__list');
-
+// const eventListElement = tripBoardElement.querySelector('.trip-events__list');
+const pointListComponent = new PointListView();
+render(tripBoardElement, pointListComponent.getElement());
 // render(eventListElement, new EditPointView(travelPoints[travelPoints.length - 1]).getElement());
 // render(eventListElement, createNewPointTemplate(travelPoints[travelPoints.length - 2]));
 
-for (let i of travelPoints.slice(0, travelPoints.length-2)) {
-  const point = new PointView(i)
-  render(eventListElement, point.getElement());
-}
+const renderPoint = (pointListElement, pointData) => {
+  const pointComponent = new PointView(pointData);
+  const pointEditorComponent = new EditPointView(pointData);
 
-// const renderPoint
+  const changeViewToPoint = () => {
+    pointListElement.replaceChild(pointComponent.getElement(), pointEditorComponent.getElement());
+  };
+  const changeViewToEdit = () => {
+    pointListElement.replaceChild(pointEditorComponent.getElement(), pointComponent.getElement());
+  };
+
+  pointComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', changeViewToEdit);
+  pointEditorComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', changeViewToPoint);
+  pointEditorComponent.getElement().querySelector('.event--edit').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    changeViewToPoint();
+  });
+
+  render(pointListElement, pointComponent.getElement());
+};
+
+
+
+for (let i = 0; i < POINT_COUNT-2; i++) {
+  renderPoint(pointListComponent.getElement(), travelPoints[i]);
+}
