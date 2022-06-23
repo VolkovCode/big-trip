@@ -1,4 +1,4 @@
-import { createElement } from "../utils.js";
+import AbstractClass from "./abstract-class.js";
 
 const createMainMenuTemplate = () => {
   return `<nav class="trip-controls__trip-tabs  trip-tabs">
@@ -7,24 +7,9 @@ const createMainMenuTemplate = () => {
   </nav>`;
 };
 
-export default class MainMenu {
-  constructor() {
-    this._element = null;
-  }
-
-  getTemlate() {
+export default class MainMenu extends AbstractClass {
+  getTemplate() {
     return createMainMenuTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemlate())
-    }
-    return this._element;
-  }
-
-  removeElemment() {
-    this._element = null;
   }
 
 }

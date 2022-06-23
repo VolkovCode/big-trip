@@ -6,13 +6,8 @@ import MainMenuView from './view/main-menu.js';
 import PointListView from './view/point-list.js';
 import PointView from './view/point.js';
 import EditPointView from './view/edit-point.js';
-// import { createMainMenuTemplate } from './view/main-menu.js';
-// import { createTripInfoTemplate } from './view/trip-info.js';
-// import { tripCostTemplate } from './view/trip-cost.js';
-// import { createTripBordTemplate } from './view/trip-sort.js';
-// import { createNewPointTemplate } from './view/new-point.js';
-// import { createEditPointTemplate } from './view/edit-point.js';
-import { createPointTemplate } from './view/point.js';
+import EmptyListView from './view/empty-list.js';
+
 import { getTravelPoint } from './data.js';
 
 const POINT_COUNT = 15;
@@ -37,10 +32,6 @@ const render = (container, element, position = RenderPosition.BEFOREEND) => {
 
 
 const travelPoints = new Array(POINT_COUNT).fill(null).map(getTravelPoint)
-
-
-console.log(travelPoints.slice(0, travelPoints.length-1))
-
 const menuElement = siteBodyElement.querySelector('.trip-controls__navigation');
 render(menuElement, new MainMenuView().getElement());
 
@@ -55,16 +46,15 @@ render(filterElement, new FilterView().getElement());
 
 const tripBoardElement = siteBodyElement.querySelector('.trip-events');
 render(tripBoardElement, new TripSortView().getElement());
-// const pointListComponent = new PointListView();
+
 render(tripBoardElement, new PointListView().getElement());
 
 
 
-// const eventListElement = tripBoardElement.querySelector('.trip-events__list');
+
 const pointListComponent = new PointListView();
 render(tripBoardElement, pointListComponent.getElement());
-// render(eventListElement, new EditPointView(travelPoints[travelPoints.length - 1]).getElement());
-// render(eventListElement, createNewPointTemplate(travelPoints[travelPoints.length - 2]));
+
 
 const renderPoint = (pointListElement, pointData) => {
   const pointComponent = new PointView(pointData);
@@ -83,7 +73,11 @@ const renderPoint = (pointListElement, pointData) => {
     evt.preventDefault();
     changeViewToPoint();
   });
-
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      pointListElement.replaceChild(pointComponent.getElement(), pointEditorComponent.getElement());
+    }
+  });
   render(pointListElement, pointComponent.getElement());
 };
 
@@ -91,4 +85,8 @@ const renderPoint = (pointListElement, pointData) => {
 
 for (let i = 0; i < POINT_COUNT-2; i++) {
   renderPoint(pointListComponent.getElement(), travelPoints[i]);
+}
+
+if (POINT_COUNT===0) {
+  render(pointListComponent.getElement(), new EmptyListView().getElement())
 }

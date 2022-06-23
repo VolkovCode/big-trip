@@ -1,4 +1,4 @@
-import { createElement } from './../utils.js'
+import AbstractClass from './abstract-class.js';
 
 const createTripInfoTemplate = () => {
   return `<section class="trip-main__trip-info  trip-info">
@@ -10,23 +10,8 @@ const createTripInfoTemplate = () => {
   </section>`;
 };
 
-export default class TripInfo {
-  constructor() {
-    this._element = null;
-  }
-
+export default class TripInfo extends AbstractClass {
   getTemplate() {
     return createTripInfoTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

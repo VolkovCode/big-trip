@@ -1,4 +1,4 @@
-import { createElement } from "../utils.js";
+import AbstractClass from "./abstract-class.js";
 
 const eventOffer = (offers) => {
   return offers.map(offer => 
@@ -95,27 +95,15 @@ const createEditPointTemplate = (point) => {
   </li > `;
 };
 
-export default class EditPoint {
+export default class EditPoint extends AbstractClass {
   constructor(point) {
-    this._element = null
-    this._point = point
+    super();
+    this._point = point;
   }
-
+  
   getTemplate() {
-    return createEditPointTemplate(this._point)
+    return createEditPointTemplate(this._point);
   }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate())
-    }
-    return this._element
-  }  
-  
-  removeElement() {
-    this._element = null
-  }
-  
 }
   
 
