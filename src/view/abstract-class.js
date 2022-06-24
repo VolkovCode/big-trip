@@ -5,11 +5,12 @@ export default class AbstractClass {
     if (new.target === AbstractClass) {
       throw new Error('Can\'t instantiate Abstract class, only concrete one.');
     }        
-    this._element = null;  
+    this._element = null;
+    this._callback = {}  
   }
+
   getTemplate() {
     throw new Error('Abstract method not implemented: getTemplate');
-    
   }
 
   getElement() {
